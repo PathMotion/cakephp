@@ -422,4 +422,17 @@ class JsHelper extends AppHelper {
 		}
 		return array($options, $htmlOptions);
 	}
+	
+	public function beforeRender() {
+		if(!isset($this->params['requested'])) {
+			ClassRegistry::addObject('main_js_helper', $this);
+		}
+	}
+
+	public function afterRender() {
+		if(isset($this->params['requested']) && ClassRegistry::isKeySet('main_js_helper')) {
+			ClassRegistry::getObject('main_js_helper')->buffer(implode("\n", $this->getBuffer()));
+		}
+	}
+	
 }
