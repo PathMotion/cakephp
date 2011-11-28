@@ -961,6 +961,36 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
+ * Test that buttons created with foo[bar] name attributes are unlocked correctly.
+ *
+ * @return void
+ */
+	public function testSecurityButtonNestedNamed() {
+		$key = 'testKey';
+		$this->Form->request['_Token'] = array('key' => $key);
+
+		$this->Form->create('Addresses');
+		$this->Form->button('Test', array('type' => 'submit', 'name' => 'Address[button]'));
+		$result = $this->Form->unlockField();
+		$this->assertEquals(array('Address.button'), $result);
+	}
+
+
+/**
+ * Test that submit inputs created with foo[bar] name attributes are unlocked correctly.
+ *
+ * @return void
+ */
+	public function testSecuritySubmitNestedNamed() {
+		$key = 'testKey';
+		$this->Form->request['_Token'] = array('key' => $key);
+
+		$this->Form->create('Addresses');
+		$this->Form->submit('Test', array('type' => 'submit', 'name' => 'Address[button]'));
+		$result = $this->Form->unlockField();
+		$this->assertEquals(array('Address.button'), $result);
+	}
+/**
  * Test that the correct fields are unlocked for image submits with no names.
  *
  * @return void
