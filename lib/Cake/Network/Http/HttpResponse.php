@@ -235,7 +235,7 @@ class HttpResponse implements ArrayAccess {
 			}
 			$decodedBody .= $chunk;
 			if ($chunkLength !== 0) {
-				$body = substr($body, $chunkLength + strlen("\r\n"));
+				$body = mb_strcut($body, $chunkLength + strlen("\r\n"));
 			}
 		}
 
